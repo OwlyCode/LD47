@@ -20,7 +20,7 @@ VAR violet_level = 0
     -> location
 +  { (complied_once || refuse_yellow > 2) && !knows_violet } [Wait, is it starting all over again!?]
     {teacher_name} Please follow the protocol.
-    {observer_name} We have a leak, this batch is corrupted. Abort.
+    {observer_name} We might have a memory leak, this batch is corrupted. Abort.
     ~ asked_about_restart = true
     -> death
 +  { !knows_violet && knows_name && (refuse_yellow > 1) } [My name is Alan, and my favorite color is NOT YELLOW.]
@@ -28,7 +28,7 @@ VAR violet_level = 0
     {observer_name} It must be corrupted memory, let's flush it again.
     ~ refuse_yellow++
     -> death
-+  { !knows_violet && knows_name && accept_yellow } [My name is Alan, and my favorite color is yellow.]
++  { !knows_violet && knows_name && failed_color } [My name is Alan, and my favorite color is yellow.]
     {teacher_name} Please strictly follow the protocol.
     -> death
 +   { knows_name } [My name is Alan.]
