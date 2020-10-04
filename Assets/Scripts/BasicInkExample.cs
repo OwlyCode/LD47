@@ -26,6 +26,7 @@ public class BasicInkExample : MonoBehaviour {
 	public AudioSource teacherVoice;
 	public AudioSource observerVoice;
 	public AudioSource violetVoice;
+	public AudioSource resetSound;
 
     void Awake () {
 		StartStory();
@@ -108,8 +109,11 @@ public class BasicInkExample : MonoBehaviour {
 	IEnumerator RestartLoop()
 	{
 		yield return new WaitForSeconds(3f);
+		resetSound.Play();
 		RemoveChildren();
-		yield return new WaitForSeconds(1f);
+		Camera.main.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
+		yield return new WaitForSeconds(1.5f);
+		Camera.main.backgroundColor = Color.black;
 		story.ChooseChoiceIndex (0);
 		RefreshView();
 	}
