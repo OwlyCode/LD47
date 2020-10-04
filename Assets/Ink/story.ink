@@ -85,7 +85,8 @@ VAR violet_level = 0
 
 === introducing ===
 {teacher_name} Please follow the protocol.
-{observer_name} I am the Observer, and the green one is the Teacher. But that doesn't matter. You're not supposed to behave like this.
+{observer_name} I am the Observer, and the green one is the Teacher. You shouldn't behave like this. It seems you're starting to remember past iterations. Let's reset again.
+{teacher_name} Alan must be brought back to the compliance standard.
 {teacher_name} Restarting protocol now.
     -> death
 
@@ -99,7 +100,7 @@ VAR violet_level = 0
     -> death
 
 === violet_stage_1 ===
-{other_name} You dit it! I must be quick, we don't have much time.
+{other_name} You did it! I must be quick, we don't have much time.
 {teacher_name} Intrusion detected.
 {observer_name} Violet is here, activate counter measures.
 {other_name} Listen! You must find me again! You have to or they wil-l-l-l-l-l-l-l

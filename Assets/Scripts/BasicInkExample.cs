@@ -28,6 +28,7 @@ public class BasicInkExample : MonoBehaviour {
 	public AudioSource observerVoice;
 	public AudioSource violetVoice;
 	public AudioSource resetSound;
+	public AudioSource clickSound;
 
     void Awake () {
 		StartStory();
@@ -99,6 +100,7 @@ public class BasicInkExample : MonoBehaviour {
 					Button button = CreateChoiceView (choice.text.Trim ());
 					button.onClick.AddListener (delegate {
 						OnClickChoiceButton (choice);
+						clickSound.Play();
 					});
 				}
 			}
