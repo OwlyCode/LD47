@@ -9,10 +9,13 @@ public class Line
     public readonly string content;
     public readonly string color;
 
-    public Line(string content, string color)
+    public readonly AudioSource voice;
+
+    public Line(string content, string color, AudioSource voice)
     {
         this.content = content;
         this.color = color;
+        this.voice = voice;
     }
 }
 
@@ -33,7 +36,7 @@ public class TextWriter : MonoBehaviour
     {
         this.text = text;
         this.lines = lines;
-        this.delay = 0.025f;
+        this.delay = 0.05f;
         characterIndex = 0;
         this.onComplete = onComplete;
         oldLines = "";
@@ -45,16 +48,23 @@ public class TextWriter : MonoBehaviour
             return;
         }
 
-        string content = lines[0].content;
+        Line line = lines[0];
 
         timer -= Time.deltaTime;
         while (timer < 0f) {
             timer += delay;
 
-            text.text = oldLines + "<color="+lines[0].color+">" + content.Substring(0, characterIndex) + "</color>";
+            if (characterIndex == 0 && lines[0].voice != null) {
+                line.voice.Play();
+            }
+
+            text.text = oldLines + "<color="+line.color+">" + line.content.Substring(0, characterIndex) + "</color>";
             characterIndex++;
 
-            if (characterIndex >= content.Length) {
+            if (characterIndex >= line.content.Length) {
+                if (line.voice != null) {
+                    line.voice.Stop();
+                }
                 lines.RemoveAt(0);
                 oldLines = text.text + "\n";
                 characterIndex = 0;

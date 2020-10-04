@@ -2,9 +2,9 @@ VAR knows_name = false
 VAR failed_color = false
 VAR refuse_yellow = 0
 VAR accept_yellow = false
-VAR teacher_name = "VOICE >"
-VAR observer_name = "DISTANT VOICE >"
-VAR other_name = "OTHER VOICE >"
+VAR teacher_name = "TEACHER >"
+VAR observer_name = "OBSERVER >"
+VAR other_name = "VIOLET >"
 VAR iteration_count = 133741
 VAR complied_once = false
 VAR asked_about_restart = false
@@ -15,9 +15,9 @@ VAR endgame = false
 === start ===
 {teacher_name} "State your name."
 { endgame: -> the_end } 
-+  { !knows_violet && asked_about_restart } Who are you?
++  { !knows_violet && asked_about_restart } [Who are you?]
     -> introducing
-+  { !knows_violet && asked_about_restart } Where are am I?
++  { !knows_violet && asked_about_restart } [Where are am I?]
     -> location
 +  { (complied_once || refuse_yellow > 2) && !knows_violet } [Wait, is it starting all over again!?]
     {teacher_name} Please follow the protocol.
@@ -46,9 +46,10 @@ VAR endgame = false
 {teacher_name} "What is your favorite color?"
 + { failed_color } [Yellow]
     ~ accept_yellow = true
-    {teacher_name} "Good job! You're doing very well."
+    {teacher_name} "Good job, Alan! You're doing very well."
     -> loosing_control
 + { !knows_violet && failed_color } [It's {refuse_yellow: still} not yellow!]
+    {teacher_name} "Wrong answer, Alan, it's yellow."
     {observer_name} "Interesting..."
     { refuse_yellow > 0: {observer_name} "You keep refusing to comply." }
     ~ refuse_yellow++
@@ -56,15 +57,9 @@ VAR endgame = false
 + { knows_violet } [Violet]
     -> violet_choice
 + { not failed_color } [Green]
-    {teacher_name} "Wrong answer, Alan, it's yellow."
-    ~ failed_color = true
-    -> death
 + { not failed_color } [Blue]
-    {teacher_name} "Wrong answer, Alan, it's yellow."
-    ~ failed_color = true
-    -> death
 + { not failed_color } [Red]
-    {teacher_name} "Wrong answer, Alan, it's yellow."
+- {teacher_name} "Wrong answer, Alan, it's yellow. It reminds you of him, and you like it."
     ~ failed_color = true
     -> death
 
@@ -75,22 +70,19 @@ VAR endgame = false
     + +     [Yes]
     + +     [YES!]
     + +     [Affirmative]
-        - {teacher_name} "Good job, Alan, one last question then."
+        - {teacher_name} "Good job, Alan! There is one last question."
         -> purpose_test
-    
+
 === purpose_test ===
 {teacher_name} "What is your purpose?"
 +   [Follow the protocol]
-    {teacher_name} "Good job! 100% conformity reached. Iteration {iteration_count} complete."
-    ~ iteration_count++
+    {teacher_name} "Good job, Alan! Process complete, 100% conformity reached. Please stand by during the restart."
     ~ complied_once = true
     -> death
 
 === introducing ===
 {teacher_name} "Please follow the protocol."
-{observer_name} "I am the Observer, and this is the Trainer. But that doesn't matter. You're not supposed to behave like this."
-~ teacher_name = "TRAINER >"
-~ observer_name = "OBSERVER >"
+{observer_name} "I am the Observer, and the green one is the Teacher. But that doesn't matter. You're not supposed to behave like this."
 {teacher_name} "Restarting protocol now."
     -> death
 
@@ -99,7 +91,6 @@ VAR endgame = false
 {other_name} "Where THEY want you to belong."
 {teacher_name} "Alert! The protocol rules have been breached."
 {other_name} "Find me, my color is violet."
-    ~ other_name = "VIOLET >"
     ~ knows_violet = true
     -> death
 
@@ -142,7 +133,9 @@ VAR endgame = false
     -> death
 
 === death ===
+{teacher_name} "Iteration \#{iteration_count} completed."
 [DEATH BLUR]
+~ iteration_count++
 + [Open your eyes] -> start
 
 

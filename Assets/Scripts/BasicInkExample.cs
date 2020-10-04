@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
 
@@ -22,7 +23,9 @@ public class BasicInkExample : MonoBehaviour {
 
     public static event Action<Story> OnCreateStory;
 	
-	public AudioSource trainerVoice;
+	public AudioSource teacherVoice;
+	public AudioSource observerVoice;
+	public AudioSource violetVoice;
 
     void Awake () {
 		StartStory();
@@ -39,26 +42,39 @@ public class BasicInkExample : MonoBehaviour {
 		
 		List<Line> lines = new List<Line>();
 
+		bool willRestart = false;
+
 		while (story.canContinue) {
 			string lineContent = story.Continue();
 			string color = "#ffffff";
+			AudioSource voice = null;
 
-			if (lineContent.StartsWith("VOICE >") || lineContent.StartsWith("TRAINER >")) {
+			willRestart = willRestart || lineContent.StartsWith("[DEATH BLUR]");
+
+			lineContent = lineContent.Replace("[DEATH BLUR]", "");
+
+			if (lineContent.StartsWith("TEACHER >")) {
 				color = "#00ff00";
+				voice = teacherVoice;
+				lineContent = lineContent.Replace("TEACHER >", "");
 			}
 
-			if (lineContent.StartsWith("DISTANT VOICE >") || lineContent.StartsWith("OBSERVER >")) {
+			if (lineContent.StartsWith("OBSERVER >")) {
 				color = "#FFFF00";
+				voice = observerVoice;
+				lineContent = lineContent.Replace("OBSERVER >", "");
 			}
 	
-			if (lineContent.StartsWith("OTHER VOICE >") || lineContent.StartsWith("VIOLET >")) {
+			if (lineContent.StartsWith("VIOLET >")) {
 				color = "#EE82EE";
+				voice = violetVoice;
+				lineContent = lineContent.Replace("VIOLET >", "");
 			}
 
-			lines.Add(new Line(lineContent, color));
+			lines.Add(new Line(lineContent, color, voice));
 		}
 		
-		CreateContentView(lines);
+		CreateContentView(lines, willRestart);
 	}
 
 	void OnClickChoiceButton (Choice choice) {
@@ -66,14 +82,11 @@ public class BasicInkExample : MonoBehaviour {
 		RefreshView();
 	}
 
-	void CreateContentView (List<Line> lines) {
+	void CreateContentView (List<Line> lines, bool willRestart) {
 		Text storyText = Instantiate (textPrefab) as Text;
 
-		trainerVoice.Play();
 		GetComponent<TextWriter>().Write(storyText, lines, () => {
-			trainerVoice.Stop();
-
-			if(story.currentChoices.Count > 0) {
+			if(story.currentChoices.Count > 0 && !willRestart) {
 				for (int i = 0; i < story.currentChoices.Count; i++) {
 					Choice choice = story.currentChoices [i];
 					Button button = CreateChoiceView (choice.text.Trim ());
@@ -83,16 +96,22 @@ public class BasicInkExample : MonoBehaviour {
 				}
 			}
 			else {
-				Button choice = CreateChoiceView("End of story.\nRestart?");
-				choice.onClick.AddListener(delegate{
-					StartStory();
-				});
+				StartCoroutine("RestartLoop");
 			}
 		});
 
 
 		//storyText.text = text;
 		storyText.transform.SetParent (canvas.transform, false);
+	}
+
+	IEnumerator RestartLoop()
+	{
+		yield return new WaitForSeconds(3f);
+		RemoveChildren();
+		yield return new WaitForSeconds(1f);
+		story.ChooseChoiceIndex (0);
+		RefreshView();
 	}
 
 	Button CreateChoiceView (string text) {
