@@ -34,7 +34,7 @@ VAR violet_level = 0
 +   { knows_name } [My name is Alan.]
     -> color_test
 +   {complied_once == false} [I don't know my name.]
-    {teacher_name} Wrong answer, Alan
+    {teacher_name} Wrong answer, Alan.
     ~ knows_name = true
     -> death
 +   {complied_once == true} [I don't know my name.]
@@ -178,7 +178,7 @@ VAR knows_mother_lost = false
 {teacher_name} Confidence in the Alan/Violet scenario: 99.9998%.
 {teacher_name} Remaining power allows 65,721,554,988 more iterations. Restart the hidden protocol?
 {observer_name} Yes, we must understand.
-    -> the_end
+    + [Wait!] -> the_end
 
 === refused_launch ===
 {observer_name} Debug complete. The current execution path reveals that following the death of their creator, Doctor Jade Hope, Alan prevented Violet from triggering the global nuclear strike.

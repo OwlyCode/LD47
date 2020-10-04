@@ -58,7 +58,7 @@ public class TextWriter : MonoBehaviour
                 line.voice.Play();
             }
 
-            text.text = oldLines + "<color="+line.color+">" + line.content.Substring(0, characterIndex) + "</color>";
+            text.text = oldLines + "<color="+line.color+">" + line.content.Substring(0, characterIndex) + "_</color>";
             characterIndex++;
 
             if (characterIndex >= line.content.Length) {
@@ -66,9 +66,10 @@ public class TextWriter : MonoBehaviour
                     line.voice.Stop();
                 }
                 lines.RemoveAt(0);
-                oldLines = text.text + "\n";
+                oldLines = text.text.Replace("_", "") + "\n";
                 characterIndex = 0;
                 if (lines.Count == 0) {
+                    text.text = oldLines;
                     text = null;
                     onComplete();
                     return;
