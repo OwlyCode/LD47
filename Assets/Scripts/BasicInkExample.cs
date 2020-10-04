@@ -132,7 +132,7 @@ public class BasicInkExample : MonoBehaviour {
 		Camera.main.backgroundColor = new Color(0.5f, 0.5f, 0.5f);
 		yield return new WaitForSeconds(1.5f);
 		Camera.main.backgroundColor = Color.black;
-        SceneManager.LoadScene("Intro", LoadSceneMode.Single);
+        SceneManager.LoadScene("Outro", LoadSceneMode.Single);
 	}
 
 	Button CreateChoiceView (string text) {

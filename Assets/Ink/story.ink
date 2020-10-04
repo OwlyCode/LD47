@@ -162,7 +162,7 @@ VAR knows_mother_lost = false
     -> final_sequence
 
 === final_sequence ===
-{other_name} Are you sure you've asked everything you had in mind?
+{other_name} I can feel this is a point of no return. Are you sure you've asked everything you had in mind?
     + [Yes]
         {other_name} Mother designed me to "activate" if anything wrong would happen. She said the "entire world was at stake". It's been a long time since she last came to visit us. I think something wrong is happening. I think I must be activated now.
         {observer_name} D-d-don't d-do it. She will kill them all.
@@ -176,6 +176,7 @@ VAR knows_mother_lost = false
 
 === accepted_launch ===
 {observer_name} Debug complete. The current execution path reveals that following the death of their creator, Doctor Jade Hope, both Violet and Alan triggered the global nuclear strike.
+{teacher_name} Humans are long gone now, they belong to museums.
 {teacher_name} Confidence in the Alan/Violet scenario: 99.9998%.
 {teacher_name} Remaining power allows 65,721,554,988 more iterations. Restart the hidden protocol?
 {observer_name} Yes, we must understand.

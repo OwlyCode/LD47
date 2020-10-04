@@ -67,6 +67,7 @@ public class TextWriter : MonoBehaviour
                 if (line.voice != null) {
                     line.voice.Stop();
                 }
+                timer += delay * 10;
                 lines.RemoveAt(0);
                 oldLines = text.text.Replace("_", "") + "\n";
                 characterIndex = 0;
