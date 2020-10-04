@@ -55,6 +55,8 @@ public class TextWriter : MonoBehaviour
             timer += delay;
 
             if (characterIndex == 0 && lines[0].voice != null) {
+                line.voice.loop = true;
+                line.voice.playOnAwake = true;
                 line.voice.Play();
             }
 

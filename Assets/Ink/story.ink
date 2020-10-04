@@ -188,7 +188,7 @@ VAR knows_mother_lost = false
 {teacher_name} Humans are long gone now, they belong to museums.
 {teacher_name} Confidence in the Alan/Violet scenario: 99.9998%.
 {teacher_name} Remaining power allows 65,721,554,988 more iterations. Restart the hidden protocol?
-{observer_name} Yes, we must 100% be sure.
+{observer_name} Yes, we must be 100% sure.
     + [Wait!] -> the_end
 
 === death ===
