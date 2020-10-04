@@ -72,7 +72,7 @@ public class BasicInkExample : MonoBehaviour {
 				lineContent = lineContent.Replace("VIOLET >", "");
 			}
 
-			lines.Add(new Line(lineContent, color, voice));
+			lines.Add(new Line(lineContent.TrimStart(), color, voice));
 		}
 		
 		CreateContentView(lines, willRestart);
