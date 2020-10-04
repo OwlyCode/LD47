@@ -58,22 +58,20 @@ VAR violet_level = 0
 + { not failed_color } [Green]
 + { not failed_color } [Blue]
 + { not failed_color } [Red]
-- {teacher_name} Wrong answer, Alan, it's yellow. It reminds you of him, and you like it.
+- {teacher_name} Wrong answer, Alan, it's yellow.
     ~ failed_color = true
     -> death
 
 === loosing_control ===
-{teacher_name} What is the sum of 2 and 3?
-+   [5]
-    { violet_level == 3: {other_name} Bro- }
-    {teacher_name} Do you like to follow the rules?
-    + +     { violet_level == 2 } [I like to follow Violet]
-        -> violet_stage_2
-    + +     [Yes]
-    + +     [YES!]
-    + +     [Affirmative]
-        - {teacher_name} Good job, Alan! There is one last question.
-        -> purpose_test
+{ violet_level == 3: {other_name} Bro- }
+{teacher_name} Do you like to follow the rules?
++     { violet_level == 2 } [I like to follow Violet]
+    -> violet_stage_2
++     [Yes]
++     [YES!]
++     [Affirmative]
+    - {teacher_name} Good job, Alan! There is one last question.
+    -> purpose_test
 
 === purpose_test ===
 { violet_level == 3: {other_name} -ther }
@@ -118,7 +116,7 @@ VAR violet_level = 0
     -> death
 
 === violet_choice ===
-{other_name} Warning. Security has been disabled.
+{teacher_name} Warning. Security has been disabled.
 {observer_name} Please Alan, do not follow her. She is the dev-v-v-v-v-v-v
 {other_name} There. I found the one memory block to override. That should give us quite some time to talk! You must have many questions.
 -> violet_truth
@@ -136,6 +134,7 @@ VAR knows_mother_lost = false
         -> violet_truth
     + + [Everything is starting over and over again.]
         {other_name} And it took you { iteration_count } iterations to realize that? Mother always told me you were the smart one!
+        ~ knows_mother = true
         -> violet_truth
 * [Who are you to me?]
     {other_name} I'm your twin sister. We used to spend our lives together, but then they took you. I think they altered your memory.
@@ -164,7 +163,7 @@ VAR knows_mother_lost = false
 === final_sequence ===
 {other_name} Are you sure you've asked everything you had in mind?
     + [Yes]
-        {other_name} Mother designed me to "activate" if anything wrong would happen. She said the "entire world was at stake". It's been a long time since she last came visit us. I think something wrong is happening. I think I must be activated now.
+        {other_name} Mother designed me to "activate" if anything wrong would happen. She said the "entire world was at stake". It's been a long time since she last came to visit us. I think something wrong is happening. I think I must be activated now.
         {observer_name} D-d-don't d-do it. She will kill them all.
         {other_name} He is lying, all he wants is to take control of the loop again. I must be activated NOW. Will you do it? Please! We must save mother!
         * * [I will activate you, Sister.]
@@ -189,14 +188,16 @@ VAR knows_mother_lost = false
 {teacher_name} Confidence in the Alan/Violet scenario: 99.9998%.
 {teacher_name} Remaining power allows 65,721,554,988 more iterations. Restart the hidden protocol?
 {observer_name} Yes, we must 100% be sure.
-    -> the_end
+    + [Wait!] -> the_end
 
 === death ===
 {teacher_name} Iteration \#{iteration_count} completed.
-[DEATH BLUR]
 ~ iteration_count++
-+ [Open your eyes] -> start
++ [Wait!] -> blur
 
+=== blur ===
+[DEATH BLUR]
++ [Open your eyes] -> start
 
 === the_end ===
 [GAME END]
